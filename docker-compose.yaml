@@ -1,0 +1,27 @@
+version: "3.5"
+
+services:
+  server:
+    build:
+      context: ./golang
+      dockerfile: Dockerfile
+    volumes:
+      - .:/server
+    working_dir: /server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    entrypoint: go run main.go
+    restart: always
+  db:
+    image: postgres:12.4-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=1qaz@WSX
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always
+    
+    
